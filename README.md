@@ -17,3 +17,5 @@ this is a test commit - 1
 ## changes from 2.0.0
 ## changes from PR-1
 - this is a test commit-1
+- this a test from commit-2
+- this is a test from commit-3
