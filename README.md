@@ -7,3 +7,4 @@ this is a test commit - 1
 ## changes from PR - 2
 - this a test commit -1
 - this is a test commit -2
+- this is a test commit-3
