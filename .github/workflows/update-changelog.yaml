@@ -35,6 +35,6 @@ jobs:
 
     - name: get release notes 
       run: |
-        COMMIT_MSG=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG} | sed 's/\./\\./g')
+        COMMIT_MSG=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG} | tr -d '.')
         echo "COMMIT_MSG=$COMMIT_MSG" >> "$GITHUB_ENV"
         echo "COMMIT_MSG=$COMMIT_MSG"
