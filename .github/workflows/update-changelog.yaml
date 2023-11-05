@@ -1,4 +1,4 @@
-name: Check Tags Workflow
+   name: Check Tags Workflow
 
 on: [push]
 
@@ -6,40 +6,37 @@ jobs:
   check_tags:
     runs-on: ubuntu-latest
 
+   outputs:
+      LATEST_TAG: ${{ steps.latest-tag.outputs.LATEST_TAG }}
+      PREVIOUS_TAG: ${{ steps.previous-tag.outputs.PREVIOUS_TAG }} 
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
           fetch-depth: 0
 
-    - name: Get latest and previous tags
-      id: get_tags
+    - name: get latest tag
+      id: latest-tag
       run: |
-        # Get the latest tag
-        latest_tag=$(git describe --tags --abbrev=0)
-        echo "Latest tag: $latest_tag"
+        LATEST_TAG=$(git describe --tags --abbrev=0)
+        echo "Latest tag: $LATEST_TAG" >> "$GITHUB_OUTPUT"
+        echo "Latest tag: $LATEST_TAG"
 
-        # Get the previous tag
-        previous_tag=$(git describe --tags --abbrev=0 $latest_tag^)
-        echo "Previous tag: $previous_tag"
-
-        # Pass the tags as output variables
-        echo "::set-output name=latest_tag::$latest_tag"
-        echo "::set-output name=previous_tag::$previous_tag"
-
-    - name: Get commit messages
-      id: get_commit_messages
+    - name: get latest tag
+      id: previous-tag
       run: |
-        # Get commit messages between previous tag and latest tag
-        commit_messages=$(git log --pretty=format:"%s" ${{ steps.get_tags.outputs.previous_tag }}..${{ steps.get_tags.outputs.latest_tag }})
-        echo "Commit messages between ${{ steps.get_tags.outputs.previous_tag }} and ${{ steps.get_tags.outputs.latest_tag }}:"
-        echo "$commit_messages"
+        PREVIOUS_TAG=$(git describe --tags --abbrev=0)
+        echo "previous tag: $PREVIOUS_TAG"  >> "$GITHUB_OUTPUT"
+        echo "previous tag: $PREVIOUS_TAG"
 
-      # Print the commit messages as an output
-      env:
-        COMMIT_MESSAGES: ${{ steps.get_commit_messages.outputs.commit_messages }}
+    - name: Debug Tags
+      run: | 
+        echo "previous tag: $PREVIOUS_TAG"
+        echo "Latest tag: $LATEST_TAG
+         
+
+        
+
+
     
-    - name: Use commit messages
-      run: |
-        # Use $COMMIT_MESSAGES in your further steps or scripts
-        echo "$COMMIT_MESSAGES"
