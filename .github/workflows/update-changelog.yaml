@@ -21,7 +21,8 @@ jobs:
         run: |
           PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1))
           echo $PREVIOUS_TAG
-
+      - name: commit messages between latest and previous tag
+        run: git log  --format=%B $LATEST_TAG..$PREVIOUS_TAG
 
 
       - name: Run Changelog CI
