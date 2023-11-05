@@ -43,8 +43,8 @@ jobs:
     - name: Update Changelog
       uses: stefanzweifel/changelog-updater-action@v1
       with:
-        latest-version: ${LATEST_TAG}
-        release-notes: jiwefijujwefoiwvoijwrvojvwrojiwvrpoj
+        latest-version: ${{ steps.latest-tag.outputs.LATEST_TAG }}
+        release-notes: "- New Feature A"
 
     - name: Commit updated CHANGELOG
       uses: stefanzweifel/git-auto-commit-action@v5
