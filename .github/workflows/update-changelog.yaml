@@ -1,68 +1,43 @@
-name: Changelog CI
+name: Check Tags Workflow
 
 on: [push]
 
 jobs:
-  build:
+  check_tags:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          
-      - name: get the latest tag
-        run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0)
-          echo $LATEST_TAG
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1))
-          echo $PREVIOUS_TAG
-          git log --format=%s $LATEST_TAG..$PREVIOUS_TAG
+    - name: Checkout code
+      uses: actions/checkout@v2
 
+    - name: Get latest and previous tags
+      id: get_tags
+      run: |
+        # Get the latest tag
+        latest_tag=$(git describe --tags --abbrev=0)
+        echo "Latest tag: $latest_tag"
 
-       
+        # Get the previous tag
+        previous_tag=$(git describe --tags --abbrev=0 $latest_tag^)
+        echo "Previous tag: $previous_tag"
 
-      - name: get the previous tag
-        run: |
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1))
-          echo $PREVIOUS_TAG
+        # Pass the tags as output variables
+        echo "::set-output name=latest_tag::$latest_tag"
+        echo "::set-output name=previous_tag::$previous_tag"
 
-      - name: Debug tags
-        run: |
-          echo "LATEST_TAG": $LATEST_TAG
-          echo "PREVIOUS_TAG": $PREVIOUS_TAG   
-          
-      - name: commit messages between latest and previous tag
-        run: git log --format=%s $LATEST_TAG..$PREVIOUS_TAG
- 
+    - name: Get commit messages
+      id: get_commit_messages
+      run: |
+        # Get commit messages between previous tag and latest tag
+        commit_messages=$(git log --pretty=format:"%s" ${{ steps.get_tags.outputs.previous_tag }}..${{ steps.get_tags.outputs.latest_tag }})
+        echo "Commit messages between ${{ steps.get_tags.outputs.previous_tag }} and ${{ steps.get_tags.outputs.latest_tag }}:"
+        echo "$commit_messages"
 
-
-      - name: Run Changelog CI
-        uses: saadmk11/changelog-ci@v1.1.2
-        with:
-          # Optional, you can provide any name for your changelog file,
-          # We currently support Markdown (.md) and reStructuredText (.rst) files
-          # defaults to `CHANGELOG.md` if not provided.
-          changelog_filename: CHANGELOG.md
-          # Optional, only required when you want more customization
-          # e.g: group your changelog by labels with custom titles,
-          # different version prefix, pull request title and version number regex etc.
-          # config file can be in JSON or YAML format.
-         
-          # Optional, This will be used to configure git
-          # defaults to `github-actions[bot]` if not provided.
-          
-          # Optional, only required when you want to run Changelog CI 
-          # on an event other than `pull_request` event.
-          # In this example `release_version` is fetched from `workflow_dispatch` events input.
-          # You can use any other method to fetch the release version
-          # such as environment variable or from output of another action
-          release_version: 5.0.0
-
-      - name: Get Changelog Output
-        run: |
-          echo "${{ steps.changelog-ci.outputs.changelog }}"
-          echo "${{ steps.changelog-ci.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY  
-         
-      
+      # Print the commit messages as an output
+      env:
+        COMMIT_MESSAGES: ${{ steps.get_commit_messages.outputs.commit_messages }}
+    
+    - name: Use commit messages
+      run: |
+        # Use $COMMIT_MESSAGES in your further steps or scripts
+        echo "$COMMIT_MESSAGES"
