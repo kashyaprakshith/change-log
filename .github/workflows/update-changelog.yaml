@@ -32,3 +32,6 @@ jobs:
       run: | 
         echo "the latest tag is ${LATEST_TAG}"
         echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
+
+    - name: get release notes 
+      run: git log  --format=%B ${PREVIOUS_TAG}..${LATEST_TAG}
