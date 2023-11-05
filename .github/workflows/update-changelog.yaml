@@ -43,7 +43,7 @@ jobs:
     - name: Update Changelog
       uses: stefanzweifel/changelog-updater-action@v1
       with:
-        latest-version: ${LATEST_TAG}
+        latest-version: "${LATEST_TAG}"
         release-notes: jiwefijujwefoiwvoijwrvojvwrojiwvrpoj
 
     - name: Commit updated CHANGELOG
