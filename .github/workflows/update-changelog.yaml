@@ -38,7 +38,7 @@ jobs:
 
     - name: get release notes 
       run: |
-        COMMIT_MSG=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG})
+        git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG}
 
     - name: Update Changelog
       uses: stefanzweifel/changelog-updater-action@v1
