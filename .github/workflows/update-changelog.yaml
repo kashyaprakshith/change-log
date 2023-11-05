@@ -17,6 +17,12 @@ jobs:
           LATEST_TAG=$(git describe --tags --abbrev=0)
           echo $LATEST_TAG
 
+      - name: get the previous tag
+        run: |
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1))
+          echo $PREVIOUS_TAG
+
+
 
       - name: Run Changelog CI
         uses: saadmk11/changelog-ci@v1.1.2
