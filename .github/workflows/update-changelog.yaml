@@ -19,7 +19,7 @@ jobs:
       id: latest-tag
       run: |
         LATEST_TAG=$(git describe --tags --abbrev=0) >> $GITHUB_OUTPUT
-        echo $LATEST_TAG
+        echo "LATEST_TAG=${CURRENT_PROJECT_VERSION}" "$GITHUB_ENV"
         
 
     - name: Get previous tag
@@ -30,6 +30,4 @@ jobs:
 
     - name: Debug Tags
       run: | 
-        LATEST_TAG=${{ steps.latest-tag.outputs.LATEST_TAG }}
-        echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
-        echo ${{ steps.latest-tag.outputs.LATEST_TAG }}
+        echo "the latest tag is ${LATEST_TAG}
