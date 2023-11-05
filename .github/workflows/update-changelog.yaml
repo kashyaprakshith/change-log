@@ -32,7 +32,7 @@ jobs:
           # In this example `release_version` is fetched from `workflow_dispatch` events input.
           # You can use any other method to fetch the release version
           # such as environment variable or from output of another action
-          release_version: 5.0.0
+          release_version: 4.0.0
 
       - name: Get Changelog Output
         run: |
