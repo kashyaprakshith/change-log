@@ -32,4 +32,4 @@ jobs:
       run: | 
         LATEST_TAG=${{ steps.latest-tag.outputs.LATEST_TAG }}
         echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
-        echo $LATEST_TAG
+        echo ${{ steps.latest-tag.outputs.LATEST_TAG }}
