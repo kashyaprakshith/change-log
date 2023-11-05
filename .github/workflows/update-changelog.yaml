@@ -15,7 +15,7 @@ jobs:
       - name: get the latest tag
         run: |
           LATEST_TAG=$(git describe --tags --abbrev=0)
-          echo $(LATEST_TAG)
+          echo $LATEST_TAG
 
 
       - name: Run Changelog CI
