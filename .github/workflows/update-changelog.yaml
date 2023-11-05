@@ -34,4 +34,7 @@ jobs:
         echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
 
     - name: get release notes 
-      run: git log  --format=%B ${PREVIOUS_TAG}..${LATEST_TAG}
+      run: |
+        COMMIT_MSG=$(git log  --format=%B ${PREVIOUS_TAG}..${LATEST_TAG}) 
+        echo "COMMIT_MSG=$COMMIT_MSG" >> "$GITHUB_ENV"
+        echo "COMMIT_MSG=$COMMIT_MSG"
