@@ -30,4 +30,4 @@ jobs:
 
     - name: Debug Tags
       run: | 
-        echo "the latest tag is ${LATEST_TAG}
+        echo "the latest tag is ${LATEST_TAG}"
