@@ -1,33 +1,42 @@
-# .github/workflows/update-changelog.yaml
-name: "Update Changelog"
+name: Changelog CI
 
 on: [push]
 
+  # Optionally you can use `workflow_dispatch` to run Changelog CI Manually
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Set Release Version'
+        required: true
+
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
 
-    permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the 
-      # updated CHANGELOG back to the repository.
-      # https://github.blog/changelog/2023-02-02-github-actions-updating-the-default-github_token-permissions-to-read-only/
-      contents: write
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.release.target_commitish }}   
+      # Checks-out your repository
+      - uses: actions/checkout@v2
 
-      - name: Update Changelog
-        uses: stefanzweifel/changelog-updater-action@v1
+      - name: Run Changelog CI
+        uses: saadmk11/changelog-ci@v1.1.2
         with:
-          latest-version: 5.0.0
+          # Optional, you can provide any name for your changelog file,
+          # We currently support Markdown (.md) and reStructuredText (.rst) files
+          # defaults to `CHANGELOG.md` if not provided.
+          changelog_filename: CHANGELOG.md
+          # Optional, only required when you want more customization
+          # e.g: group your changelog by labels with custom titles,
+          # different version prefix, pull request title and version number regex etc.
+          # config file can be in JSON or YAML format.
+         
+          # Optional, This will be used to configure git
+          # defaults to `github-actions[bot]` if not provided.
           
-
-      - name: Commit updated CHANGELOG
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          branch: ${{ github.event.release.target_commitish }}
-          commit_message: Update CHANGELOG
-          file_pattern: CHANGELOG.md
+          # Optional, only required when you want to run Changelog CI 
+          # on an event other than `pull_request` event.
+          # In this example `release_version` is fetched from `workflow_dispatch` events input.
+          # You can use any other method to fetch the release version
+          # such as environment variable or from output of another action
+          release_version: ${{ github.event.inputs.release_version }}
+         
+      
