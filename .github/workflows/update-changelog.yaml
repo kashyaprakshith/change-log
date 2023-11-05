@@ -13,7 +13,9 @@ jobs:
           fetch-depth: 0
           
       - name: get the latest tag
-        run: git describe --tags --abbrev=0
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+          echo $(LATEST_TAG)
 
 
       - name: Run Changelog CI
