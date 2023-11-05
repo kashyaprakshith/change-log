@@ -17,6 +17,11 @@ jobs:
           LATEST_TAG=$(git describe --tags --abbrev=0)
           echo $LATEST_TAG
 
+      - name: Debug tags
+        run: |
+          echo "LATEST_TAG: $LATEST_TAG"
+          echo "PREVIOUS_TAG: $PREVIOUS_TAG"    
+
       - name: get the previous tag
         run: |
           PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1))
