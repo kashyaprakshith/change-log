@@ -31,3 +31,4 @@ jobs:
     - name: Debug Tags
       run: | 
         echo "LATEST_TAG= ${{ steps.latest-tag.outputs.LATEST_TAG }}"
+        echo $LATEST_TAG
