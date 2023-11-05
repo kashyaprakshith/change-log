@@ -44,7 +44,10 @@ jobs:
       uses: stefanzweifel/changelog-updater-action@v1
       with:
         latest-version: ${{ env.LATEST_TAG }}
-        release-notes: "- New Feature A"
+        release-notes: |
+          - New Feature A
+          - Another Feature B
+          - Bugfix C 
 
     - name: Commit updated CHANGELOG
       uses: stefanzweifel/git-auto-commit-action@v5
