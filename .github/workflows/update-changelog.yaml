@@ -31,5 +31,10 @@ jobs:
           # You can use any other method to fetch the release version
           # such as environment variable or from output of another action
           release_version: 5.0.0
+
+      - name: Get Changelog Output
+        run: |
+          echo "${{ steps.changelog-ci.outputs.changelog }}"
+          echo "${{ steps.changelog-ci.outputs.changelog }}" >> $GITHUB_STEP_SUMMARY  
          
       
