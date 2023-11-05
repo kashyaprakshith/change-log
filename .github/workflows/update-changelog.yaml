@@ -22,7 +22,7 @@ jobs:
           PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1))
           echo $PREVIOUS_TAG
       - name: commit messages between latest and previous tag
-        run: git log --format=%s 5.0.0..4.0.0
+        run: git log -1 --pretty=%B 5.0.0..4.0.0
 
 
 
