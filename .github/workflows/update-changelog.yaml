@@ -38,7 +38,7 @@ jobs:
 
     - name: get release notes 
       run: |
-        RELEASE_NOTES=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG} | grep -o '\[.*\]' | awk '{print "- " $0}' | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/^/"/;s/$/"/')
+        RELEASE_NOTES=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG} 
         echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
         echo "RELEASE_NOTES=$RELEASE_NOTES"
 
@@ -46,7 +46,7 @@ jobs:
       uses: stefanzweifel/changelog-updater-action@v1
       with:
         latest-version: ${{ env.LATEST_TAG }}
-        release-notes: ${{ env.RELEASE_NOTES }}
+        release-notes: "[GHI-678][patch]: Testy Mcdonalds\n- [DEF-345][minor]: Testy McTesticles. \n- [ABC-123][major]: testy mctestface"
 
     - name: Commit updated CHANGELOG
       uses: stefanzweifel/git-auto-commit-action@v5
