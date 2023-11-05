@@ -18,17 +18,16 @@ jobs:
     - name: Get latest tag
       id: latest-tag
       run: |
-        echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_STATE
+        echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+        echo "LATEST_TAG=$(git describe --tags --abbrev=0)"
+        
 
     - name: Get previous tag
       id: previous-tag
       run: |
-        PREVIOUS_TAG=$(git describe --tags --abbrev=0)
-        echo "PREVIOUS_TAG=$PREVIOUS_TAG" >> $GITHUB_STATE
+        PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1)) >> $GITHUB_OUTPUT
+        echo "PREVIOUS_TAG=$PREVIOUS_TAG" 
 
     - name: Debug Tags
       run: | 
-        echo "Previous tag: $PREVIOUS_TAG"
-        echo "Latest tag: $LATEST_TAG"
-        echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_OUTPUT
-        echo "PREVIOUS_TAG=$PREVIOUS_TAG" >> $GITHUB_OUTPUT
+        echo "LATEST_TAG= ${{ steps.lates-tag.outputs.LATEST_TAG }}"
