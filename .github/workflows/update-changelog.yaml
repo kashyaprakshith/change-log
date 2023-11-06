@@ -37,23 +37,14 @@ jobs:
           echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
 
       # Uncomment the following block if you need the release notes
-      #- name: get release notes 
-      #  id: release-not
-      #  run: |
-      #    RELEASE_NOTES=$(cat <<EOF
-      #    $(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g" | tr -d '.')
-      #EOF
-      #)
-      #    echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
-      #    echo "RELEASE_NOTES=$RELEASE_NOTES"
-
       - name: get release notes 
         id: release-not
         run: |
-          cat <<EOF >> "$GITHUB_ENV"
-          RELEASE_NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g" | tr -d '.')
-          EOF
-          echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
+          RELEASE_NOTES=$(git log 5.0.0..6.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g")
+          echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
+          echo "RELEASE_NOTES=$RELEASE_NOTES"
+
+   
           
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
