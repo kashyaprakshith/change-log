@@ -50,8 +50,7 @@ jobs:
         uses: stefanzweifel/changelog-updater-action@v1
         with:
           latest-version: ${{ env.LATEST_TAG }}
-          # Uncomment the following line if you need to use release notes
-          # release-notes: ${{ steps.release-not.outputs.RELEASE_NOTES }}
+          release-notes: ${{ env.RELEASE_NOTES }}
 
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v5
