@@ -36,12 +36,23 @@ jobs:
         echo "the latest tag is ${LATEST_TAG}"
         echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
 
+  #  - name: get release notes 
+  #    id: release-notes
+ #     run: |
+   #     RELEASE_NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g")
+   #     echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
+   #     echo "RELEASE_NOTES=$RELEASE_NOTES"
     - name: get release notes 
-      id: release-notes
+      id: release-not
       run: |
-        RELEASE_NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g")
-        echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
-        echo "RELEASE_NOTES=$RELEASE_NOTES"
+        { 
+         echo 'RELEASE_NOTES'<<EOF'
+         git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g"
+         echo EOF
+        } >> "$GITHUB_ENV"
+        echo echo "RELEASE_NOTES=$RELEASE_NOTES"
+        
+        
 
     - name: Update Changelog
       uses: stefanzweifel/changelog-updater-action@v1
