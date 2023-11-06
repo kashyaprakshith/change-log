@@ -1,4 +1,4 @@
-name: Check Tags Workfloww
+name: Check Tags Workflow
 
 on:
   push:
@@ -9,9 +9,6 @@ jobs:
   check_tags:
     runs-on: ubuntu-latest
     permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the 
-      # updated CHANGELOG back to the repository.
-      # https://github.blog/changelog/2023-02-02-github-actions-updating-the-default-github_token-permissions-to-read-only/
       contents: write
     steps:
       - name: Checkout code
@@ -37,25 +34,28 @@ jobs:
           echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
           echo "date=$(git log -1 --date=short --format=%ad '${{ github.event.release.tag_name }}')"
 
-      # Uncomment the following block if you need the release notes
       - name: get release notes 
         id: release-not
         run: |
           NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g" | tr -d '.' | sed 's/$/\\n/' | tr -d '\n')
+          echo "RELEASE_NOTES=$NOTES" >> "$GITHUB_ENV"
           
-          echo  "RELEASE_NOTES=$NOTES" >> "$GITHUB_ENV"
-          
-          
-      - run: echo  "${{ env.RELEASE_NOTES }}"
-          
-
-   
+      - run: echo "${{ env.RELEASE_NOTES }}"
           
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
         with:
           latest-version: ${{ env.LATEST_TAG }}
-          release-notes:  "${{ env.RELEASE_NOTES }}"
+          release-notes: |
+            "### Added
+             - New Feature A
+             - New Feature B
+
+            ### Changed
+             - Update Feature C
+
+            ### Removes
+             - Remove Feature D"
 
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v5
