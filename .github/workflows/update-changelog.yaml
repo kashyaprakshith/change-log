@@ -38,7 +38,7 @@ jobs:
 
     - name: get release notes 
       run: |
-        RELEASE_NOTES=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG} | awk 'BEGIN {ORS="\\n- "} {print}')
+        RELEASE_NOTES=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG} | sed 's/^/- /' | tr '\n' ' ' | sed 's/ $/\\n/')
         echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
         echo "RELEASE_NOTES=$RELEASE_NOTES"
 
