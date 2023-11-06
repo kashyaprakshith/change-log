@@ -41,8 +41,8 @@ jobs:
         id: release-not
         run: |
           RELEASE_NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g" | tr -d '.' | sed 's/$/\\n/' | tr -d '\n')
-          RELEASE_NOTES=\"${RELEASE_NOTES}\" >> "$GITHUB_ENV"
-          echo "RELEASE_NOTES=$RELEASE_NOTES"
+          RELEASE_NOTES=\"${RELEASE_NOTES}\" 
+          echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
 
    
           
