@@ -1,4 +1,4 @@
-name: Check Tags Workflow
+name: Check Tags Workfloww
 
 on:
   push:
