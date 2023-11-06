@@ -38,7 +38,7 @@ jobs:
 
     - name: get release notes 
       run: |
-        RELEASE_NOTES=$(git log --format=%B ${PREVIOUS_TAG}..${LATEST_TAG} | grep -E '^\S' | sed 's/^- \?/- /' | sed ':a;N;$!ba;s/\n/\\n/g' | sed 's/^/"/;s/$/"/')
+        RELEASE_NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g")
         echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
         echo "RELEASE_NOTES=$RELEASE_NOTES"
 
