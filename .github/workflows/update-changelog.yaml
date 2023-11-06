@@ -46,7 +46,7 @@ jobs:
           echo "RELEASE_NOTES=$RELEASE_NOTES"
           echo "${{ env.RELEASE_NOTES }}"
           
-      - run: echo "${{ env.RELEASE_NOTES }}"
+      - run: echo -e ${{ env.RELEASE_NOTES }}
           
 
    
