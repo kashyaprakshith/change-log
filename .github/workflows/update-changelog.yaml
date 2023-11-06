@@ -44,6 +44,7 @@ jobs:
           RELEASE_NOTES=\"${RELEASE_NOTES}\" 
           echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
           echo "RELEASE_NOTES=$RELEASE_NOTES"
+          echo "${{ env.RELEASE_NOTES }}"
 
    
           
