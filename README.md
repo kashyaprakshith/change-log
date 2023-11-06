@@ -73,3 +73,7 @@ this is a test commit - 1
 
 ## 6.0.0 - PR1
 - this is a test commit-1.
+
+## 6.0.0 - PR3
+- this is a test commit-1.
+
