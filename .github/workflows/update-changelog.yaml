@@ -37,7 +37,7 @@ jobs:
       - name: get release notes 
         id: release-not
         run: |
-          NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g" | tr -d '.' | sed 's/$/\\n/' | tr -d '\n')
+          NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g")
           echo "RELEASE_NOTES=$NOTES" >> "$GITHUB_ENV"
           
       - run: echo -e ${{ env.RELEASE_NOTES }}
