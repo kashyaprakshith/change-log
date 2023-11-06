@@ -50,9 +50,9 @@ jobs:
       - name: get release notes 
         id: release-not
         run: |
-          echo 'RELEASE_NOTES<<EOF' >> $GITHUB_ENV
+          echo 'RELEASE_NOTES<<EOF'
           git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g" | tr -d '.'
-          echo EOF "$GITHUB_ENV"
+          echo EOF >> "$GITHUB_ENV"
           echo "RELEASE_NOTES=$RELEASE_NOTES"
           
       - name: Update Changelog
