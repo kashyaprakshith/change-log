@@ -48,22 +48,14 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
      
-      - run: echo -e "${{ env.RELEASE_NOTES }}"
+      - run: echo -e ${{ env.RELEASE_NOTES }}
           
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
         with:
           latest-version: ${{ env.LATEST_TAG }}
           release-notes: |
-            ### Added
-             - New Feature A
-             - New Feature B
-
-            ### Changed
-             - Update Feature C
-
-            ### Removes
-             - Remove Feature D
+            ${{ env.RELEASE_NOTES }}
 
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v5
