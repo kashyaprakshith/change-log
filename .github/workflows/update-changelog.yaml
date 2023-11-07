@@ -43,7 +43,8 @@ jobs:
         id: release-not
         run: |
           NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g")
-          echo -e "RELEASE_NOTES=$NOTES <<EOF" >> $GITHUB_ENV
+          echo  "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo -e "$NOTES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
      
