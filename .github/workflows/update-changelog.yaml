@@ -48,7 +48,7 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
      
-      - run: echo  ${{ env.RELEASE_NOTES }}
+      - run: echo  "${{ env.RELEASE_NOTES }}"
           
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
