@@ -134,7 +134,7 @@ jobs:
       - name: Push new changelog
         run: |
           git add --update
-          git config --global user.name "cofinity-x-version-bumper-bot[bot]"
+          git config --global user.name "raks"
           git config --global user.email "ghxjh@gmail.com"
           git commit -m "Changelog of changelog"
           git push origin      
