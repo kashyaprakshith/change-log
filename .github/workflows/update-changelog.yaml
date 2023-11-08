@@ -34,7 +34,7 @@ jobs:
           echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
  
       - name: Generate changelog
-        shell: python3
+        shell: python
         run: |
           import git
           import re
