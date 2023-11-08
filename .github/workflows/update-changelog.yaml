@@ -42,6 +42,8 @@ jobs:
  
       - name: Generate changelog
         shell: python
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
         run: |
           import git
           import re
@@ -51,12 +53,12 @@ jobs:
           
           repo_path = 'C:\\projects\\change-log'
           conn = http.client.HTTPSConnection("api.github.com")
-          
+          token = os.environ['TOKEN']
           payload = ""
           
           headers = {
               'content-type': "application/json; charset=utf-8",
-              'Authorization': "Bearer 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",
+              'Authorization': "Bearer " + token,
               'User-Agent': 'Your-User-Agent-Name'
           }
           
