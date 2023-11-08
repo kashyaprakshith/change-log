@@ -55,10 +55,12 @@ jobs:
           conn = http.client.HTTPSConnection("api.github.com")
           token = os.environ['TEST']
           payload = ""
-          
+          token = "Bearer " + token
+          token_debug = token[:8]
+          print(token_debug)
           headers = {
               'content-type': "application/json; charset=utf-8",
-              'Authorization': "Bearer " + token,
+              'Authorization': token,
               'User-Agent': 'Your-User-Agent-Name'
           }
           
