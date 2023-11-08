@@ -120,4 +120,4 @@ jobs:
           release-notes: |
             ${{ env.RELEASE_NOTES }}
 
-      - name: Commit updated CHANGELOG
+     
