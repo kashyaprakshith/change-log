@@ -35,9 +35,6 @@ jobs:
  
       - name: Generate changelog
         shell: python
-        env:
-          JIRA_SVCACC_TOKEN: ${{ secrets.JIRA_SVCACC_TOKEN }}
-          JIRA_SVCACC_EMAIL: ${{ secrets.JIRA_SVCACC_EMAIL }}
         run: |
           import git
           import re
