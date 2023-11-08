@@ -43,7 +43,7 @@ jobs:
       - name: Generate changelog
         shell: python
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          TOKEN: ${{ secrets.TEST }}
         run: |
           import git
           import re
@@ -53,7 +53,7 @@ jobs:
           
           repo_path = 'C:\\projects\\change-log'
           conn = http.client.HTTPSConnection("api.github.com")
-          token = os.environ['TOKEN']
+          token = os.environ['TEST']
           payload = ""
           
           headers = {
