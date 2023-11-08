@@ -105,10 +105,14 @@ jobs:
           ls_store_str = "\n".join(ls_store)
           print(ls_store_str)
           
+          modified = f'''RELEASE_NOTES<<EOF
+          {ls_store_str}
+          EOF
+          '''
+
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
-              myfile.write(f"RELEASE_NOTES={ls_store_str}")
-          myfile.close()
+               myfile.write(modified)
      # - name: get release notes 
      #   id: release-not
      #   run: |
