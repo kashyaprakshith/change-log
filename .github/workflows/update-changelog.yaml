@@ -103,13 +103,12 @@ jobs:
                       data = f"- {message} by {author_name} [#{number}]({html_href})"
                       ls_store.append(data)
           ls_store_str = "\n".join(ls_store)
-          ls_store_str += "\nEOF"
           print(ls_store_str)
           
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
               myfile.write(f"RELEASE_NOTES={ls_store_str}")
- 
+          myfile.close()
      # - name: get release notes 
      #   id: release-not
      #   run: |
