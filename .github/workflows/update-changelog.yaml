@@ -76,7 +76,7 @@ jobs:
           regex_patterns = [re.compile(pattern) for pattern in patterns]
           
           # Iterate over commits from the latest tag
-          commits_since_latest_tag = list(repo.iter_commits(f"4.0.0..5.0.0", no_merges=True))
+          commits_since_latest_tag = list(repo.iter_commits(f"{latest_tag}..{previous_tag}", no_merges=True))
           ls_store = []
           for commit in commits_since_latest_tag:
               message = commit.message.strip()
