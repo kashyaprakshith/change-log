@@ -33,12 +33,77 @@ jobs:
           echo "the latest tag is ${LATEST_TAG}"
           echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
 
-     # - name: get release notes 
-     #   id: release-not
-     #   run: |
-     #     NOTES=$(git log 4.0.0..5.0.0 --pretty='%s' | grep -E '\[\b[A-Z][A-Z0-9_]+-[1-9][0-9]*\]\[(major|minor|patch)\]:\s\w+' | sed "s/\[.*\]\[.*\]: /- /g")
-     #     echo "RELEASE_NOTES=$NOTES" >> "$GITHUB_ENV"
-
+     - name: Generate changelog
+        shell: python
+        env:
+          JIRA_SVCACC_TOKEN: ${{ secrets.JIRA_SVCACC_TOKEN }}
+          JIRA_SVCACC_EMAIL: ${{ secrets.JIRA_SVCACC_EMAIL }}
+        run: |
+          import git
+          import re
+          import http.client
+          import json
+          import os
+          
+          
+          
+          repo_path = 'C:\\projects\\change-log'
+          conn = http.client.HTTPSConnection("api.github.com")
+          
+          payload = ""
+          
+          headers = {
+              'content-type': "application/json; charset=utf-8",
+              'Authorization': "Bearer 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",
+              'User-Agent': 'Your-User-Agent-Name'
+          }
+          
+          repo = git.Repo(search_parent_directories=True)
+          
+          # Get the latest tag
+          latest_tag = repo.tags[-1]
+          
+          # Define patterns for commit messages
+          patterns = [r'(?:^\[)(\b[A-Z][A-Z0-9_]+-[1-9][0-9]*)(?:\])']
+          
+          # Compile regex patterns
+          regex_patterns = [re.compile(pattern) for pattern in patterns]
+          
+          # Iterate over commits from the latest tag
+          commits_since_latest_tag = list(repo.iter_commits(f"4.0.0..5.0.0", no_merges=True))
+          ls_store = []
+          for commit in commits_since_latest_tag:
+              message = commit.message.strip()
+              for pattern in regex_patterns:
+                  if pattern.match(commit.message.strip()):
+                      sha = str(commit.hexsha)
+                      conn.request("GET", f"/repos/kashyaprakshith/change-log/commits/{sha}/pulls", payload, headers)
+                      response = conn.getresponse()
+                      data = response.read().decode("utf-8")
+                      info = json.loads(data)
+                      data = response.read().decode("utf-8")  
+                      html_href = info[0].get('_links', {}).get('html', {}).get('href', '') 
+                      author_name = commit.author.name 
+                      # extract the PR Number
+                      link = f"{html_href}"
+                      pattern = r'/pull/(\d+)'
+                      match = re.search(pattern, link)
+                      if match:
+                          number = match.group(1)
+          
+                      #print(f"Commit Message: {message}")
+                      #print(f"PR-Link = {html_href}")
+                      #print(f"Author: {author_name}")
+                      #print(f"PR-NUMBER: {number}")
+                      data = f"- {message} by {author_name} [#{number}]({html_href})"
+                      ls_store.append(data)
+          ls_store_str = "\n".join(ls_store)
+          print(ls_store_str)
+          
+          env_file = os.getenv('GITHUB_ENV')
+          with open(env_file, "a") as myfile:
+              myfile.write("RELEASE_NOTES={ls_store_str}")
+ 
       - name: get release notes 
         id: release-not
         run: |
