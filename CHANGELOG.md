@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 7.2.1 - 2023-11-08
+
+- [BBB-123][patch]: Testy test test by Rakshith Raghavendra Kashyap [#20](https://github.com/kashyaprakshith/change-log/pull/20)
+
 ## 7.0.0 - 2023-11-08
 
 - [DEF-222][minor]: Testy tessshjsjz by Rakshith Raghavendra Kashyap [#19](https://github.com/kashyaprakshith/change-log/pull/19)
