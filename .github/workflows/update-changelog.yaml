@@ -56,7 +56,7 @@ jobs:
           
           headers = {
               'content-type': "application/json; charset=utf-8",
-              'Authorization': "Bearer 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",
+              'Authorization': "Bearer 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",
               'User-Agent': 'Your-User-Agent-Name'
           }
           
