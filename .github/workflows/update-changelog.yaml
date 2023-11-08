@@ -103,6 +103,7 @@ jobs:
                       data = f"- {message} by {author_name} [#{number}]({html_href})"
                       ls_store.append(data)
           ls_store_str = "\n".join(ls_store)
+          ls_store_str += "EOF"
           print(ls_store_str)
           
           env_file = os.getenv('GITHUB_ENV')
