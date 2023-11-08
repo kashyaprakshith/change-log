@@ -15,9 +15,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.12    
+          python-version: '3.12'
 
       - name: Get latest tag
         id: latest-tag
@@ -44,8 +45,6 @@ jobs:
           import http.client
           import json
           import os
-          
-          
           
           repo_path = 'C:\\projects\\change-log'
           conn = http.client.HTTPSConnection("api.github.com")
@@ -102,7 +101,7 @@ jobs:
           
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
-              myfile.write("RELEASE_NOTES={ls_store_str}")
+              myfile.write(f"RELEASE_NOTES={ls_store_str}\n")
  
       - name: get release notes 
         id: release-not
@@ -112,7 +111,6 @@ jobs:
           echo -e "$NOTES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-     
       - run: echo  "${{ env.RELEASE_NOTES }}"
           
       - name: Update Changelog
@@ -123,8 +121,3 @@ jobs:
             ${{ env.RELEASE_NOTES }}
 
       - name: Commit updated CHANGELOG
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          branch: ${{ github.event.release.target_commitish }}
-          commit_message: Update CHANGELOG
-          file_pattern: CHANGELOG.md
