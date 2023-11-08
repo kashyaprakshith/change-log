@@ -53,7 +53,7 @@ jobs:
           
           repo_path = 'C:\\projects\\change-log'
           conn = http.client.HTTPSConnection("api.github.com")
-          token = os.environ['TEST']
+          token = os.environ['TOKEN']
           payload = ""
           token = "Bearer " + token
           token_debug = token[:8]
