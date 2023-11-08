@@ -32,8 +32,8 @@ jobs:
         run: | 
           echo "the latest tag is ${LATEST_TAG}"
           echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
-
-     - name: Generate changelog
+ 
+      - name: Generate changelog
         shell: python
         env:
           JIRA_SVCACC_TOKEN: ${{ secrets.JIRA_SVCACC_TOKEN }}
