@@ -56,8 +56,7 @@ jobs:
           token = os.environ['TOKEN']
           payload = ""
           token = "Bearer " + token
-          token_debug = token[:8]
-          print(token_debug)
+         
           headers = {
               'content-type': "application/json; charset=utf-8",
               'Authorization': token,
@@ -108,7 +107,7 @@ jobs:
           
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
-              myfile.write(f"RELEASE_NOTES={ls_store_str}\n")
+              myfile.write("RELEASE_NOTES=ls_store_str")
  
       - name: get release notes 
         id: release-not
