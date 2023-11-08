@@ -19,6 +19,9 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.12'
+      - name: Install git, jira for python
+        run: |
+          pip3 install -q GitPython==3.1.40    
 
       - name: Get latest tag
         id: latest-tag
