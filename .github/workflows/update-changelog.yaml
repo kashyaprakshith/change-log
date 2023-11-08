@@ -108,7 +108,6 @@ jobs:
           print(previous_tag)
           modified = f'''RELEASE_NOTES<<EOF
           {ls_store_str}
-          print
           EOF
           '''
 
