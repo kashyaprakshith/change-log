@@ -67,7 +67,7 @@ jobs:
           
           # Get the latest tag
           latest_tag = repo.tags[-1]
-          previous_tag = os.getenv['PREVIOUS_TAG']
+          previous_tag = os.environ['PREVIOUS_TAG']
           
           # Define patterns for commit messages
           patterns = [r'(?:^\[)(\b[A-Z][A-Z0-9_]+-[1-9][0-9]*)(?:\])']
