@@ -67,6 +67,7 @@ jobs:
           
           # Get the latest tag
           latest_tag = repo.tags[-1]
+          previous_tag = os.getenv['PREVIOUS_TAG']
           
           # Define patterns for commit messages
           patterns = [r'(?:^\[)(\b[A-Z][A-Z0-9_]+-[1-9][0-9]*)(?:\])']
@@ -104,15 +105,17 @@ jobs:
                       ls_store.append(data)
           ls_store_str = "\n".join(ls_store)
           print(ls_store_str)
-          
+          print(previous_tag)
           modified = f'''RELEASE_NOTES<<EOF
           {ls_store_str}
+          print
           EOF
           '''
 
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
                myfile.write(modified)
+               
      # - name: get release notes 
      #   id: release-not
      #   run: |
