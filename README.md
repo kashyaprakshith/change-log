@@ -1,2 +1,1 @@
-- test 1, minor
-- test 2, major
+
