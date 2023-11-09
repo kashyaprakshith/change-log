@@ -1,4 +1,4 @@
-name: Check Tags WorkflowW
+name: Technical Changelog
 
 on:
   push:
@@ -16,10 +16,12 @@ jobs:
         with:
           fetch-depth: 0
           
+      # Setup Python    
       - uses: actions/setup-python@v4
         with:
           python-version: '3.12'
-      - name: Install git, jira for python
+
+      - name: Install git python
         run: |
           pip3 install -q GitPython==3.1.40    
 
@@ -34,13 +36,8 @@ jobs:
         run: |
           PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1)) 
           echo "PREVIOUS_TAG=$PREVIOUS_TAG" >> "$GITHUB_ENV"
-
-      - name: Debug Tags
-        run: | 
-          echo "the latest tag is ${LATEST_TAG}"
-          echo "the PREVIOUS tag is ${PREVIOUS_TAG}"
  
-      - name: Generate changelog
+      - name: Generate markdown for changelog
         shell: python
         env:
           TOKEN: ${{ secrets.TEST }}
@@ -51,12 +48,11 @@ jobs:
           import json
           import os
           
-          repo_path = 'C:\\projects\\change-log'
           conn = http.client.HTTPSConnection("api.github.com")
           token = os.environ['TOKEN']
           payload = ""
           token = "Bearer " + token
-         
+          
           headers = {
               'content-type': "application/json; charset=utf-8",
               'Authorization': token,
@@ -67,17 +63,20 @@ jobs:
           
           # Get the latest tag
           latest_tag = repo.tags[-1]
+          
+          # Get the previous tag prior to latest tag
           previous_tag = os.environ['PREVIOUS_TAG']
           
-          # Define patterns for commit messages
+          # Define Regex pattern for filtering commit messages
           patterns = [r'(?:^\[)(\b[A-Z][A-Z0-9_]+-[1-9][0-9]*)(?:\])']
           
           # Compile regex patterns
           regex_patterns = [re.compile(pattern) for pattern in patterns]
           
-          # Iterate over commits from the latest tag
+          # Iterate commits between previous tag and latest tag
           commits_since_latest_tag = list(repo.iter_commits(f"{previous_tag}..{latest_tag}", no_merges=True))
-          ls_store = []
+          
+          markdown = []
           for commit in commits_since_latest_tag:
               message = commit.message.strip()
               for pattern in regex_patterns:
@@ -88,35 +87,35 @@ jobs:
                       data = response.read().decode("utf-8")
                       info = json.loads(data)
                       data = response.read().decode("utf-8")  
+                      # extract the PR link from the response
                       html_href = info[0].get('_links', {}).get('html', {}).get('href', '') 
+          
+                      # extract the author name
                       author_name = commit.author.name 
-                      # extract the PR Number
+          
+                      # extract the PR link
                       link = f"{html_href}"
+                      # Regex pattern match to extract PR Number
                       pattern = r'/pull/(\d+)'
                       match = re.search(pattern, link)
                       if match:
                           number = match.group(1)
           
-                      #print(f"Commit Message: {message}")
-                      #print(f"PR-Link = {html_href}")
-                      #print(f"Author: {author_name}")
-                      #print(f"PR-NUMBER: {number}")
+                      
                       data = f"- {message} by {author_name} [#{number}]({html_href})"
-                      ls_store.append(data)
-          ls_store_str = "\n".join(ls_store)
-          print(ls_store_str)
-          print(previous_tag)
+                      markdown.append(data)
+          markdown_str = "\n".join(markdown)
+          print(markdown_str)
+          
+          # modify the markdown_str as a multiline string
           modified = f'''RELEASE_NOTES<<EOF
-          {ls_store_str}
+          {markdown_str}
           EOF
           '''
-
+          # Upload to GITHUB_ENV
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
-               myfile.write(modified)
-               
-
-      - run: echo  "${{ env.RELEASE_NOTES }}"
+              myfile.write(modified)
           
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
