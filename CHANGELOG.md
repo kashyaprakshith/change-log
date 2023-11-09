@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.1.0 - 2023-11-09
+
+- [ABC-123][minor]: demo-33 by Rakshith Raghavendra Kashyap [#28](https://github.com/kashyaprakshith/change-log/pull/28)
+
 ## 3.0.1 - 2023-11-09
 
 - [DEMO-333][patch]: demo test -2 by Rakshith Raghavendra Kashyap [#27](https://github.com/kashyaprakshith/change-log/pull/27)
