@@ -119,10 +119,12 @@ jobs:
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
               myfile.write(modified)
+
+              
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
         with:
-          latest-version: ${{ env.LATEST_TAG }}
+          latest-version: ${{ env.NEXT_PROJECT_VERSION }}
           release-notes: |
             ${{ env.RELEASE_NOTES }}
             
@@ -130,9 +132,9 @@ jobs:
         run: |
           git config --global user.name "gitBot"
           git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
-          git tag -a "${NEXT_PROJECT_VERSION}" -m "Release v${{ env.NEXT_PROJECT_VERSION }}"
+          git tag -a "${{ env.NEXT_PROJECT_VERSION }}" -m "Release v${{ env.NEXT_PROJECT_VERSION }}"
           echo "Bumping Version from ${{ env.CURRENT_PROJECT_VERSION }} to ${{ env.NEXT_PROJECT_VERSION }}"
-          git push --follow-tags origin ${{ github.base_ref }} "${NEXT_PROJECT_VERSION}"
+          git push --follow-tags origin ${{ github.base_ref }} "${{ env.NEXT_PROJECT_VERSION }}"
           
       - name: Push new changelog
         run: |
