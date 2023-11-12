@@ -66,6 +66,9 @@ jobs:
       - name: Install git python
         run: |
           pip3 install -q GitPython==3.1.40
+      - name: see 
+        run: echo ${{ env.NEXT_PROJECT_VERSION }}
+        
       - name: Generate markdown for changelog
         shell: python
         env:
