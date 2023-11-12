@@ -1,6 +1,6 @@
-#name: "Bump release version"
+name: "Bump release version"
 
-#on:
+on:
   pull_request:
     types:
       - closed
@@ -21,6 +21,7 @@ jobs:
         run: |
           CURRENT_PROJECT_VERSION=$(git describe --tags --abbrev=0 | tr -d 'v')
           echo "CURRENT_PROJECT_VERSION=${CURRENT_PROJECT_VERSION}" >> "$GITHUB_ENV"
+          
       - name: Check version impact and increment accordingly
         run: |
           COMMIT_MSG=$(git log -1 --pretty=%B)
@@ -45,14 +46,6 @@ jobs:
               ;;
           esac
           echo "NEXT_PROJECT_VERSION=${NEXT_PROJECT_VERSION}" >> "$GITHUB_ENV"
-      - name: Create Tag
-        run: |
-          git config --global user.name "gitBot"
-          git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
-          git tag -a "${NEXT_PROJECT_VERSION}" -m "Release v${NEXT_PROJECT_VERSION}"
-          echo "Bumping Version from ${CURRENT_PROJECT_VERSION} to ${NEXT_PROJECT_VERSION}"
-          git push --follow-tags origin ${{ github.base_ref }} "${NEXT_PROJECT_VERSION}"
-
 
   change-log:
     runs-on: ubuntu-latest
@@ -64,28 +57,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          
-      # Setup Python    
       - uses: actions/setup-python@v4
         with:
           python-version: '3.12'
-
       - name: Install git python
         run: |
-          pip3 install -q GitPython==3.1.40    
-
-      - name: Get latest tag
-        id: latest-tag
-        run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0) 
-          echo "LATEST_TAG=${LATEST_TAG}" >> "$GITHUB_ENV"
-          
-      - name: Get previous tag
-        id: previous-tag
-        run: |
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 $(git rev-list --tags --skip=1 -n 1)) 
-          echo "PREVIOUS_TAG=$PREVIOUS_TAG" >> "$GITHUB_ENV"
- 
+          pip3 install -q GitPython==3.1.40
       - name: Generate markdown for changelog
         shell: python
         env:
@@ -101,30 +78,19 @@ jobs:
           token = os.environ['TOKEN']
           payload = ""
           token = "Bearer " + token
-          
           headers = {
               'content-type': "application/json; charset=utf-8",
               'Authorization': token,
               'User-Agent': 'Your-User-Agent-Name'
           }
-          
           repo = git.Repo(search_parent_directories=True)
-          
-          # Get the latest tag
-          latest_tag = repo.tags[-1]
-          
-          # Get the previous tag prior to latest tag
+          tags = list(repo.tags)
+          tags.sort(key=lambda tag: tag.commit.committed_date, reverse=True)
+          latest_pushed_tag = tags[0]
           previous_tag = os.environ['PREVIOUS_TAG']
-          
-          # Define Regex pattern for filtering commit messages
-          patterns = [r'(?:^\[)(\b[A-Z][A-Z0-9_]+-[1-9][0-9]*)(?:\])']
-          
-          # Compile regex patterns
+          patterns = [r'(?:^\[)(\b[A-Z][A-Z0_9]+-[1-9][0-9]*)(?:\])']
           regex_patterns = [re.compile(pattern) for pattern in patterns]
-          
-          # Iterate commits between previous tag and latest tag
-          commits_since_latest_tag = list(repo.iter_commits(f"{previous_tag}..{latest_tag}", no_merges=True))
-          
+          commits_since_latest_tag = list(repo.iter_commits(rev=f"{latest_pushed_tag}..HEAD"))
           markdown = []
           for commit in commits_since_latest_tag:
               message = commit.message.strip()
@@ -136,44 +102,39 @@ jobs:
                       data = response.read().decode("utf-8")
                       info = json.loads(data)
                       data = response.read().decode("utf-8")  
-                      # extract the PR link from the response
                       html_href = info[0].get('_links', {}).get('html', {}).get('href', '') 
-          
-                      # extract the author name
                       author_name = commit.author.name 
-          
-                      # extract the PR link
                       link = f"{html_href}"
-                      # Regex pattern match to extract PR Number
                       pattern = r'/pull/(\d+)'
                       match = re.search(pattern, link)
                       if match:
                           number = match.group(1)
-          
-                      
                       data = f"- {message} by {author_name} [#{number}]({html_href})"
                       markdown.append(data)
           markdown_str = "\n".join(markdown)
           print(markdown_str)
-          
-          # modify the markdown_str as a multiline string
           modified = f'''RELEASE_NOTES<<EOF
           {markdown_str}
           EOF
           '''
-          # Upload to GITHUB_ENV
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
               myfile.write(modified)
-          
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
         with:
           latest-version: ${{ env.LATEST_TAG }}
           release-notes: |
             ${{ env.RELEASE_NOTES }}
-  
-
+            
+      - name: Create Tag
+        run: |
+          git config --global user.name "gitBot"
+          git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
+          git tag -a "${NEXT_PROJECT_VERSION}" -m "Release v${{ env.NEXT_PROJECT_VERSION }}"
+          echo "Bumping Version from ${{ env.CURRENT_PROJECT_VERSION }} to ${{ env.NEXT_PROJECT_VERSION }}"
+          git push --follow-tags origin ${{ github.base_ref }} "${NEXT_PROJECT_VERSION}"
+          
       - name: Push new changelog
         run: |
           git add --update
@@ -182,6 +143,4 @@ jobs:
           git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
           git commit -m "Changelog of ${{ github.ref_name }}"
           git log --graph --all --oneline
-          git push origin 
-
-     
+          git push origin
