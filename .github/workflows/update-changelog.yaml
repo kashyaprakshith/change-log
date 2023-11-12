@@ -87,7 +87,6 @@ jobs:
           tags = list(repo.tags)
           tags.sort(key=lambda tag: tag.commit.committed_date, reverse=True)
           latest_pushed_tag = tags[0]
-          previous_tag = os.environ['PREVIOUS_TAG']
           patterns = [r'(?:^\[)(\b[A-Z][A-Z0_9]+-[1-9][0-9]*)(?:\])']
           regex_patterns = [re.compile(pattern) for pattern in patterns]
           commits_since_latest_tag = list(repo.iter_commits(rev=f"{latest_pushed_tag}..HEAD"))
