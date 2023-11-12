@@ -1,6 +1,6 @@
-name: "Bump release version"
+#name: "Bump release version"
 
-on:
+#on:
   pull_request:
     types:
       - closed
