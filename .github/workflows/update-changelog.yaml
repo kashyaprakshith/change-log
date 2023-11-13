@@ -124,12 +124,13 @@ jobs:
               for pattern in regex_patterns:
                   if pattern.match(commit.message.strip()):
                       sha = str(commit.hexsha)
-                      conn.request("GET", f"/repos/{owner}/{repo_name}/commits/{sha}/pulls", payload, headers)
+                      conn.request("GET", f"/repos/kashyaprakshith/change-log/commits/{sha}/pulls", payload, headers)
                       response = conn.getresponse()
                       data = response.read().decode("utf-8")
                       info = json.loads(data)
                       data = response.read().decode("utf-8")  
-                      html_href = info[0].get('_links', {}).get('html', {}).get('href', '') 
+                      # extract the PR link from the response
+                      html_href = info[0].get('_links', {}).get('html', {}).get('href', '')
                       author_name = commit.author.name 
                       link = f"{html_href}"
                       pattern = r'/pull/(\d+)'
