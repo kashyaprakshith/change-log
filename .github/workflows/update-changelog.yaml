@@ -1,9 +1,10 @@
 name: "Bump release versionn"
 
 on:
-  pull_request:
-    types:
-      - closed
+  #pull_request:
+    #types:
+     # - closed
+   push:
  
 
 permissions: read-all
