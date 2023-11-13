@@ -80,7 +80,7 @@ jobs:
       - name: get repo name and repo owner
         run: |
           echo "Repository Name: ${{ github.repository }}"
-          echo "Repository Owner: ${{ github.repository_owner }}"
+          echo "Repository Owner: ${{ ${{ github.event.repository.name }} }}"
       - name: Generate markdown for changelog
         shell: python
         env:
