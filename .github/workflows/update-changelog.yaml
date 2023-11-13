@@ -1,18 +1,16 @@
 name: "Bump release versionn"
 
 on:
- # pull_request:
-  #  types:
-   #   - closed
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - closed
+ 
 
 permissions: read-all
 
 jobs:
   version-bump:
-   # if: ${{ github.event.pull_request.merged }}
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     outputs: 
       current_version: ${{ steps.current_version.outputs.CURRENT_PROJECT_VERSION }}
@@ -148,9 +146,9 @@ jobs:
         run: |
           git config --global user.name "gitBot"
           git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
-          git tag -a "${{ env.NEXT_PROJECT_VERSION }}" -m "Release v${{ env.NEXT_PROJECT_VERSION }}"
-          echo "Bumping Version from ${{ env.CURRENT_PROJECT_VERSION }} to ${{ env.NEXT_PROJECT_VERSION }}"
-          git push --follow-tags origin ${{ github.base_ref }} "${{ env.NEXT_PROJECT_VERSION }}"
+          git tag -a "$${{ needs.version-bump.outputs.next_version }}" -m "Release v${{ needs.version-bump.outputs.next_version }}"
+          echo "Bumping Version from ${{ needs.version-bump.outputs.current_version }} to ${{ needs.version-bump.outputs.next_version }}"
+          git push --follow-tags origin ${{ github.base_ref }} "${{ needs.version-bump.outputs.next_version }}"
           
       - name: Push new changelog
         run: |
