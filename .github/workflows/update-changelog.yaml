@@ -1,4 +1,4 @@
-name: "Bump release version"
+name: "Bump release versionn"
 
 on: [push]
   #pull_request:
