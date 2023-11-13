@@ -28,6 +28,7 @@ jobs:
         run: |
           CURRENT_PROJECT_VERSION=$(git describe --tags --abbrev=0 | tr -d 'v')
           echo "CURRENT_PROJECT_VERSION=${CURRENT_PROJECT_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "CURRENT_PROJECT_VERSION=${CURRENT_PROJECT_VERSION}"
           
       - name: Check version impact and increment accordingly
         id: next_version
