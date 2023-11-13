@@ -71,8 +71,8 @@ jobs:
       - name: Install git python
         run: |
           pip3 install -q GitPython==3.1.40
-      - name: see 
-        run: echo ${{ needs.version-bump.outputs.next_version }}
+      - name: see next version
+        run: echo " next verdion is ${{ needs.version-bump.outputs.next_version }} "
         
       - name: Generate markdown for changelog
         shell: python
