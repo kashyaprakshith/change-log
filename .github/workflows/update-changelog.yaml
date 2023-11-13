@@ -109,7 +109,8 @@ jobs:
           }
           #repo_path = 'C:\\projects\\change-log'
           repo = git.Repo(search_parent_directories=True)
-          
+          owner = os.environ['repository_owner']
+          repo_name = os.environ['repository_name']
           
           tags = list(repo.tags)
           tags.sort(key=lambda tag: tag.commit.committed_date, reverse=True)
