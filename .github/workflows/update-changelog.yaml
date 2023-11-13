@@ -54,6 +54,7 @@ jobs:
               ;;
           esac
           echo "NEXT_PROJECT_VERSION=${NEXT_PROJECT_VERSION}" >> $GITHUB_OUTPUT
+          echo "NEXT_PROJECT_VERSION=${NEXT_PROJECT_VERSION}"
 
   change-log:
     runs-on: ubuntu-latest
