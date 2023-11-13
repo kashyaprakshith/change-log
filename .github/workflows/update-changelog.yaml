@@ -1,17 +1,17 @@
 name: "Bump release version"
 
 on:
-  #pull_request:
-    #types:
-     # - closed
-   push:
+  pull_request:
+    types:
+      - closed
+  
  
 
 permissions: read-all
 
 jobs:
   version-bump:
-   # if: ${{ github.event.pull_request.merged }}
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     outputs: 
       current_version: ${{ steps.current_version.outputs.CURRENT_PROJECT_VERSION }}
@@ -98,6 +98,7 @@ jobs:
               'Authorization': token,
               'User-Agent': 'Your-User-Agent-Name'
           }
+          #repo_path = 'C:\\projects\\change-log'
           repo = git.Repo(search_parent_directories=True)
           remote_url = repo.remotes.origin.url
           owner, repo_name = remote_url.split("/")[-2:]
@@ -114,13 +115,11 @@ jobs:
               for pattern in regex_patterns:
                   if pattern.match(commit.message.strip()):
                       sha = str(commit.hexsha)
-                      print(f"/repos/{owner}/{repo_name}/commits/{sha}/pulls")
                       conn.request("GET", f"/repos/{owner}/{repo_name}/commits/{sha}/pulls", payload, headers)
                       response = conn.getresponse()
                       data = response.read().decode("utf-8")
-                      print(data)
                       info = json.loads(data)
-                      print(info)  
+                      data = response.read().decode("utf-8")  
                       html_href = info[0].get('_links', {}).get('html', {}).get('href', '') 
                       author_name = commit.author.name 
                       link = f"{html_href}"
@@ -140,7 +139,7 @@ jobs:
           '''
           env_file = os.getenv('GITHUB_ENV')
           with open(env_file, "a") as myfile:
-              myfile.write(modified)
+               myfile.write(modified)
 
               
       - name: Update Changelog
