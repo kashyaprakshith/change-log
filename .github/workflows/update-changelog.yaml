@@ -14,6 +14,8 @@ jobs:
   version-bump:
    # if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
+    outputs: 
+      next_version: ${{ steps.next_version.outputs.NEXT_PROJECT_VERSION }}
       
     permissions:
       contents: write
@@ -51,7 +53,7 @@ jobs:
               exit 1
               ;;
           esac
-          echo "NEXT_PROJECT_VERSION=${NEXT_PROJECT_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "NEXT_PROJECT_VERSION=${NEXT_PROJECT_VERSION}" >> $GITHUB_OUTPUT
 
   change-log:
     runs-on: ubuntu-latest
