@@ -77,12 +77,16 @@ jobs:
         run: |
           echo " next verdion is ${{ needs.version-bump.outputs.next_version }} "
           echo " current verdion is ${{ needs.version-bump.outputs.current_version }} "
-      - name: get repo name and repo owner
+      - name: Set Environment Variables
         run: |
-          echo "repository_name: ${{ github.event.repository.name }}" >> "$GITHUB_ENV"
-          echo "repo name: ${{ env.repository_name }}"
-          echo "repository_owner: ${{ github.repository_owner }}" >> "$GITHUB_ENV"
-          echo "repo owner: ${{ env.repository_owner }}"
+          echo "repository_name=${{ github.event.repository.name }}" >> $GITHUB_ENV
+          echo "repository_owner=${{ github.repository_owner }}" >> $GITHUB_ENV
+      
+      - name: Access Environment Variables
+        run: |
+          echo "repo name: $repository_name"
+          echo "repo owner: $repository_owner"
+          
       - name: Generate markdown for changelog
         shell: python
         env:
