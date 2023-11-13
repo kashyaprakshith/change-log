@@ -101,7 +101,7 @@ jobs:
           repo = git.Repo(search_parent_directories=True)
           remote_url = repo.remotes.origin.url
           owner, repo_name = remote_url.split("/")[-2:]
-          repo_name = repo_name[:-4]
+          # repo_name = repo_name[:-4]
           tags = list(repo.tags)
           tags.sort(key=lambda tag: tag.commit.committed_date, reverse=True)
           latest_pushed_tag = tags[0]
