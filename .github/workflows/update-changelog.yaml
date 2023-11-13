@@ -129,6 +129,7 @@ jobs:
                       data = response.read().decode("utf-8")
                       info = json.loads(data)
                       data = response.read().decode("utf-8")  
+                      print(data)
                       # extract the PR link from the response
                       html_href = info[0].get('_links', {}).get('html', {}).get('href', '')
                       author_name = commit.author.name 
