@@ -117,8 +117,9 @@ jobs:
                       conn.request("GET", f"/repos/{owner}/{repo_name}/commits/{sha}/pulls", payload, headers)
                       response = conn.getresponse()
                       data = response.read().decode("utf-8")
+                      print(data)
                       info = json.loads(data)
-                      data = response.read().decode("utf-8")  
+                      print(info)  
                       html_href = info[0].get('_links', {}).get('html', {}).get('href', '') 
                       author_name = commit.author.name 
                       link = f"{html_href}"
