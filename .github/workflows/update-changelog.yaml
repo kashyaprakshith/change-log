@@ -79,8 +79,10 @@ jobs:
           echo " current verdion is ${{ needs.version-bump.outputs.current_version }} "
       - name: get repo name and repo owner
         run: |
-          echo "Repository Name: ${{ github.repository }}"
-          echo "Repository Owner: ${{ github.event.repository.name }}"
+          echo "repository_name: ${{ github.event.repository.name }}" >> "$GITHUB_ENV"
+          echo "repo name: ${{ env.repository_name }}
+          echo "repository_owner: ${{ github.repository_owner }}" >> "$GITHUB_ENV"
+          echo "repo owner: ${{ env.repository_owner }}
       - name: Generate markdown for changelog
         shell: python
         env:
