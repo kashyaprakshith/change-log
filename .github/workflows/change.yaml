@@ -2,9 +2,9 @@ name: "Technical Changelog"
 
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - closed
 
 permissions: read-all
 
