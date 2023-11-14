@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 13.0.0 - 2023-11-14
+
+- [ABC-123][major]: testy test test by kashyaprakshith [94](https://github.com/kashyaprakshith/change-log/pull/94)
+
 ## 12.2.2 - 2023-11-14
 
 - [SDLC-777][patch]: added check if the workflow is running on main (#90) by kashyaprakshith [90](https://github.com/kashyaprakshith/change-log/pull/90)
