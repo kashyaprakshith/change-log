@@ -11,7 +11,7 @@ permissions: read-all
 
 jobs:
   version-bump:
-    if: ${{ github.event.pull_request.merged }}
+    if: ${{ github.event.pull_request.merged && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     outputs: 
       current_version: ${{ steps.current_version.outputs.CURRENT_PROJECT_VERSION }}
