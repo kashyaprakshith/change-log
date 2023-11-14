@@ -79,7 +79,7 @@ jobs:
         run: |
           echo 'RELEASE_NOTES<<EOF'  >>  
           echo "- $(git show -s --format=%s) by ${{ github.event.sender.login }} [${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }})"
-          echo 'EOF' >> $GITHUB_ENV
+          echo EOF >> "$GITHUB_ENV"
 
       - name: see env variable
         run: echo "release notes=${{ env.RELEASE_NOTES }}"    
