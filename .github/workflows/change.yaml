@@ -73,7 +73,16 @@ jobs:
           echo "PR:             ${{ github.event.pull_request.number }}"
           echo "PR-link:        ${{ github.event.pull_request.html_url }}"
           echo "Commit-message: $(git show -s --format=%s)" 
+          echo "- $(git show -s --format=%s) by ${{ github.event.sender.login }} [${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }})" 
+
+      - name: multiline string
+        run: |
+          echo 'RELEASE_NOTES<<EOF'  >>  $GITHUB_ENV
           echo "- $(git show -s --format=%s) by ${{ github.event.sender.login }} [${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }})"
+          echo 'EOF' >> $GITHUB_ENV
+          
+
+      
           
 
       
