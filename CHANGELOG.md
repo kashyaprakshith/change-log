@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 13.0.1 - 2023-11-14
+
+- [SDLC-888][patch]: terwhdgwcUHIWDCUH by kashyaprakshith [96](https://github.com/kashyaprakshith/change-log/pull/96)
+
 ## 13.0.0 - 2023-11-14
 
 - [ABC-123][major]: testy test test by kashyaprakshith [94](https://github.com/kashyaprakshith/change-log/pull/94)
