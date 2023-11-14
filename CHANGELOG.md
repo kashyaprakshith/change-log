@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## 6.0.0 - 2023-11-14
+
 ## 4.0.0 - 2023-11-09
 
 - [ABC-333][major]: demo-777 by Rakshith Raghavendra Kashyap [#29](https://github.com/kashyaprakshith/change-log/pull/29)
