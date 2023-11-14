@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 12.2.1 - 2023-11-14
+
+- [SDLC-74][patch]: Code Cleaning by kashyaprakshith [89](https://github.com/kashyaprakshith/change-log/pull/89)
+
 ## 12.2.0 - 2023-11-14
 
 - [SDLC-74][minor]: modified README.md by kashyaprakshith [88](https://github.com/kashyaprakshith/change-log/pull/88)
