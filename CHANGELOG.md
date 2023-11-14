@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 10.0.0 - 2023-11-14
+
+- [ABC-123][major]: burger burger burger by kashyaprakshith []()
+
 ## 9.0.0 - 2023-11-14
 
 - [ABC-222][major]: burger dosa upma by kashyaprakshith []()
