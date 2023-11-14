@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 12.1.0 - 2023-11-14
+
+- [SDLC-555][minor]: modifications by kashyaprakshith [87](https://github.com/kashyaprakshith/change-log/pull/87)
+
 ## 12.0.1 - 2023-11-14
 
 - [ABC-222][patch]: BURGER GOZLEME LAVASH by kashyaprakshith [84](https://github.com/kashyaprakshith/change-log/pull/84)
