@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
+
 name: "Technical Changelogggrgegeth"
 
 
-
->>>>>>> 7993326380afa8c9a09eeef5be417baefba90c0e
 on:
   pull_request:
     types:
