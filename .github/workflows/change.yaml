@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 name: "Technical Changelog"
+=======
+
+name: "Technical Changelogggrgeg"
+
+>>>>>>> b039e23fd0aff71c9b827b5955a4e6738a41ab49
 
 on:
   pull_request:
