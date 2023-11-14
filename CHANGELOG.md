@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 12.0.0 - 2023-11-14
+
+- [ABC-123][major]: ADNJKDCHWVIUH by kashyaprakshith [83](https://github.com/kashyaprakshith/change-log/pull/83)
+
 ## 11.0.0 - 2023-11-14
 
 - [ABC-123][major]: burger upma idly by kashyaprakshith []()
