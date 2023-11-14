@@ -88,15 +88,7 @@ jobs:
           release-notes: |
             ${{ env.RELEASE_NOTES }}
             
-      - name: Create Tag
-        run: |
-          git config --global user.name "gitBot"
-          git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
-          git switch ${{ github.event.repository.default_branch }}
-          git tag -a "${{ needs.version-bump.outputs.next_version }}" -m "Release v${{ needs.version-bump.outputs.next_version }}"
-          git commit -m "Bumping Version from ${{ needs.version-bump.outputs.current_version }} to ${{ needs.version-bump.outputs.next_version }}"
-          git push --follow-tags origin ${{ github.base_ref }} "${{ needs.version-bump.outputs.next_version }}"
-          
+         
       - name: Push new changelog
         run: |
           git add --update
@@ -106,6 +98,15 @@ jobs:
           git commit -m "Changelog of ${{ github.ref_name }}"
           git log --graph --all --oneline
           git push origin  
+
+      - name: Create Tag
+        run: |
+          git config --global user.name "gitBot"
+          git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
+          git switch ${{ github.event.repository.default_branch }}
+          git tag -a "${{ needs.version-bump.outputs.next_version }}" -m "Release v${{ needs.version-bump.outputs.next_version }}"
+          git commit -m "Bumping Version from ${{ needs.version-bump.outputs.current_version }} to ${{ needs.version-bump.outputs.next_version }}"
+          git push --follow-tags origin ${{ github.base_ref }} "${{ needs.version-bump.outputs.next_version }}"    
           
 
       
