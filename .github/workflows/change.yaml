@@ -1,6 +1,4 @@
-name: "Technical Changelogggrgegeth"
-
-
+name: "Technical Changelog"
 
 on:
   pull_request:
