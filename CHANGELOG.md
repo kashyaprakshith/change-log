@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 12.2.2 - 2023-11-14
+
+- [SDLC-777][patch]: added check if the workflow is running on main (#90) by kashyaprakshith [90](https://github.com/kashyaprakshith/change-log/pull/90)
+
 ## 12.2.1 - 2023-11-14
 
 - [SDLC-74][patch]: Code Cleaning by kashyaprakshith [89](https://github.com/kashyaprakshith/change-log/pull/89)
