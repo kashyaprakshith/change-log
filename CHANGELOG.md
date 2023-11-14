@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 12.2.0 - 2023-11-14
+
+- [SDLC-74][minor]: modified README.md by kashyaprakshith [88](https://github.com/kashyaprakshith/change-log/pull/88)
+
 ## 12.1.0 - 2023-11-14
 
 - [SDLC-555][minor]: modifications by kashyaprakshith [87](https://github.com/kashyaprakshith/change-log/pull/87)
