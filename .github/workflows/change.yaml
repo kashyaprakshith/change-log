@@ -1,4 +1,4 @@
-name: "Technical Changelogggrgegeth"
+name: "Changelog via Git"
 
 on:
   pull_request:
@@ -9,8 +9,8 @@ permissions: read-all
 
 jobs:
   version-bump:
-    if: ${{ github.event.pull_request.merged && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.merged }}
     outputs: 
       current_version: ${{ steps.current_version.outputs.CURRENT_PROJECT_VERSION }}
       next_version: ${{ steps.next_version.outputs.NEXT_PROJECT_VERSION }}
@@ -78,25 +78,19 @@ jobs:
           release-notes: |
             ${{ env.RELEASE_NOTES }}
             
-      - name: Push new changelog
+      - name: Push new changelog and Create Tag
         run: |
           git add --update
           git switch ${{ github.event.repository.default_branch }}
-          git config --global user.name "gitBot"
-          git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
-          git commit -m "Changelog of ${{ github.ref_name }}"
-          git log --graph --all --oneline
-          git push origin  
-
-      - name: Create Tag
-        run: |
-          git config --global user.name "gitBot"
-          git config --global user.email ${{ github.repository_id }}+git-bot[bot]@users.noreply.github.com
+          git config --global user.name "cofinity-x-version-bumper-bot[bot]"
+          git config --global user.email ${{ vars.APP_ID }}+cofinity-x-version-bumper-bot[bot]@users.noreply.github.com
+          git commit -m "Updating Changelog of ${{ github.ref_name }} with Bumping Version from ${{ needs.version-bump.outputs.current_version }} to ${{ needs.version-bump.outputs.next_version }}"
+          git push origin 
           git tag -a "${{ needs.version-bump.outputs.next_version }}" -m "Release v${{ needs.version-bump.outputs.next_version }}"
           echo "Bumping Version from ${{ needs.version-bump.outputs.current_version }} to ${{ needs.version-bump.outputs.next_version }}"
-          git push --follow-tags origin ${{ github.base_ref }} "${{ needs.version-bump.outputs.next_version }}"    
-          
+          git push --follow-tags origin ${{ github.base_ref }} "${{ needs.version-bump.outputs.next_version }}"  
 
+      
       
            
 
