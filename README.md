@@ -13,8 +13,6 @@ uqwdxhoiuqwhdc
 - protected branch rules
 - WEF"E$F  FGFRW
 - this isisis
-<<<<<<< HEAD
 - testttewjuzgwdiuh
-=======
->>>>>>> main
+- tghis a testt
 
