@@ -85,6 +85,7 @@ jobs:
           git switch ${{ github.event.repository.default_branch }}
           git config --global user.name "cofinity-x-version-bumper-bot[bot]"
           git config --global user.email ${{ vars.APP_ID }}+cofinity-x-version-bumper-bot[bot]@users.noreply.github.com
+          git remote set-url origin https://${{secrets.TEST}}@github.com/kashyaprakshith/change-log
           git commit -m "Updating Changelog of ${{ github.ref_name }} with Bumping Version from ${{ needs.version-bump.outputs.current_version }} to ${{ needs.version-bump.outputs.next_version }}"
           git push origin 
           git tag -a "${{ needs.version-bump.outputs.next_version }}" -m "Release v${{ needs.version-bump.outputs.next_version }}"
