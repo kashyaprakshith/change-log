@@ -1,3 +1,5 @@
+name: "Changelog via Git"
+
 on:
   pull_request:
     types:
@@ -86,4 +88,11 @@ jobs:
           git push origin 
           git tag -a "${{ needs.version-bump.outputs.next_version }}" -m "Release v${{ needs.version-bump.outputs.next_version }}"
           echo "Bumping Version from ${{ needs.version-bump.outputs.current_version }} to ${{ needs.version-bump.outputs.next_version }}"
-          git push --follow-tags origin ${{ github.base_ref }} "${{ needs.version-bump.outputs.next_version }}" 
+          git push --follow-tags origin ${{ github.base_ref }} "${{ needs.version-bump.outputs.next_version }}"  
+
+      
+      
+           
+
+
+     
